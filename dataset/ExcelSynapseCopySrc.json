@@ -1,0 +1,28 @@
+{
+	"name": "ExcelSynapseCopySrc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileServerLS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"worksheetName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": {
+				"value": "@dataset().worksheetName",
+				"type": "Expression"
+			},
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "SalesData.xlsx"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
