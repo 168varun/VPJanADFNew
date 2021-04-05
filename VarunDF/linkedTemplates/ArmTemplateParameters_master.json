@@ -5,7 +5,13 @@
 		"factoryName": {
 			"value": "VarunDF"
 		},
+		"AzureSynapseAnalyticsLS_connectionString": {
+			"value": ""
+		},
 		"BlobLS_connectionString": {
+			"value": ""
+		},
+		"FileServerLS_password": {
 			"value": ""
 		},
 		"SampleDBLS_connectionString": {
@@ -16,6 +22,12 @@
 		},
 		"SqlServerLS_connectionString": {
 			"value": ""
+		},
+		"FileServerLS_properties_typeProperties_host": {
+			"value": "C:\\Users\\Varun\\Desktop\\LTI_NEW\\_Training\\SynapseLS"
+		},
+		"FileServerLS_properties_typeProperties_userId": {
+			"value": "Varun"
 		},
 		"containerUri": {
 			"value": ""

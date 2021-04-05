@@ -7,9 +7,17 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "VarunDF"
 		},
+		"AzureSynapseAnalyticsLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsLS'"
+		},
 		"BlobLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BlobLS'"
+		},
+		"FileServerLS_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FileServerLS'"
 		},
 		"SampleDBLS_connectionString": {
 			"type": "secureString",
@@ -22,6 +30,14 @@
 		"SqlServerLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SqlServerLS'"
+		},
+		"FileServerLS_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\Users\\Varun\\Desktop\\LTI_NEW\\_Training\\SynapseLS"
+		},
+		"FileServerLS_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "Varun"
 		},
 		"containerUri": {
 			"type": "string",
@@ -50,21 +66,53 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureSynapseAnalyticsLS_connectionString": {
+						"value": "[parameters('AzureSynapseAnalyticsLS_connectionString')]"
+					},
 					"BlobLS_connectionString": {
 						"value": "[parameters('BlobLS_connectionString')]"
 					},
 					"SampleDBLS_connectionString": {
 						"value": "[parameters('SampleDBLS_connectionString')]"
 					},
+					"FileServerLS_password": {
+						"value": "[parameters('FileServerLS_password')]"
+					},
 					"SqlServerAdWLS_connectionString": {
 						"value": "[parameters('SqlServerAdWLS_connectionString')]"
 					},
 					"SqlServerLS_connectionString": {
 						"value": "[parameters('SqlServerLS_connectionString')]"
+					},
+					"FileServerLS_properties_typeProperties_host": {
+						"value": "[parameters('FileServerLS_properties_typeProperties_host')]"
+					},
+					"FileServerLS_properties_typeProperties_userId": {
+						"value": "[parameters('FileServerLS_properties_typeProperties_userId')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "VarunDF_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VarunDF_ArmTemplate_0')]"
+			]
 		}
 	]
 }
