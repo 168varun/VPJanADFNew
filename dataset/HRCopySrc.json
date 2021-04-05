@@ -1,0 +1,12 @@
+{
+	"name": "HRCopySrc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServerAdWLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}
