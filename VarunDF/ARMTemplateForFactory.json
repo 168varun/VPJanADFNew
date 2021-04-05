@@ -223,7 +223,12 @@
 										{
 											"referenceName": "HRCopySink",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"filename": {
+													"value": "@item().name",
+													"type": "Expression"
+												}
+											}
 										}
 									]
 								}
@@ -304,11 +309,20 @@
 					"referenceName": "BlobLS",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
 						"container": "hroutput"
 					},
 					"columnDelimiter": ",",
