@@ -62,7 +62,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "select * from HumanResources.Employee where BusinessEntityID = any(select BusinessEntityID from HumanResources.EmployeeDepartmentHistory where DepartmentID = (select DepartmentID from HumanResources.Department where Name = '@{item().name}' ))\n",
+										"value": "select BusinessEntityID, LoginID, OrganizationLevel, JobTitle, BirthDate, MaritalStatus, Gender  from HumanResources.Employee where BusinessEntityID = any(select BusinessEntityID from HumanResources.EmployeeDepartmentHistory where DepartmentID = (select DepartmentID from HumanResources.Department where Name = '@{item().name}' ))\n",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
