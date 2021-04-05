@@ -1,0 +1,9 @@
+{
+	"name": "VarunDF",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0e061253-16eb-4a31-b56a-f4b8fed61476",
+		"tenantId": "142a8c0d-f4f8-4075-9e95-8c7b13fedb8f"
+	}
+}
