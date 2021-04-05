@@ -1,0 +1,17 @@
+{
+	"name": "FileServerLS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\Users\\Varun\\Desktop\\LTI_NEW\\_Training\\Day43",
+			"userId": "Varun",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3Y2E3ZjliZS1lODE1LTRiMmYtYjQ0OS0wZGMyOTg1NmIwYzIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "OnPremiseIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
