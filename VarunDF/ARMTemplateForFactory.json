@@ -188,7 +188,7 @@
 										"source": {
 											"type": "SqlServerSource",
 											"sqlReaderQuery": {
-												"value": "select * from HumanResources.Employee where BusinessEntityID = any(select BusinessEntityID from HumanResources.EmployeeDepartmentHistory where DepartmentID = (select DepartmentID from HumanResources.Department where Name = {@trim(item().name)} ))",
+												"value": "@select * from HumanResources.Employee where BusinessEntityID = any(select BusinessEntityID from HumanResources.EmployeeDepartmentHistory where DepartmentID = (select DepartmentID from HumanResources.Department where Name = @{item().name})",
 												"type": "Expression"
 											},
 											"queryTimeout": "02:00:00",
