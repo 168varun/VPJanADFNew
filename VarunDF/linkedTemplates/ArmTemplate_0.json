@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS2LS'"
 		},
+		"Adl1LS_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'Adl1LS'"
+		},
 		"BlobLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BlobLS'"
@@ -26,6 +30,26 @@
 		"ADLS2LS_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://vpadls2.dfs.core.windows.net"
+		},
+		"Adl1LS_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "https://vpadls1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"Adl1LS_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "d19e4637-e496-470d-b970-ec0db1506cf4"
+		},
+		"Adl1LS_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "142a8c0d-f4f8-4075-9e95-8c7b13fedb8f"
+		},
+		"Adl1LS_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "dd03e502-4ab2-4eb7-85fd-3ecf67cc8345"
+		},
+		"Adl1LS_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "VarunPatilRG"
 		}
 	},
 	"variables": {
@@ -45,6 +69,27 @@
 						"type": "SecureString",
 						"value": "[parameters('ADLS2LS_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Adl1LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDataLakeStore",
+				"typeProperties": {
+					"dataLakeStoreUri": "[parameters('Adl1LS_properties_typeProperties_dataLakeStoreUri')]",
+					"servicePrincipalId": "[parameters('Adl1LS_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalKey": {
+						"type": "SecureString",
+						"value": "[parameters('Adl1LS_servicePrincipalKey')]"
+					},
+					"tenant": "[parameters('Adl1LS_properties_typeProperties_tenant')]",
+					"subscriptionId": "[parameters('Adl1LS_properties_typeProperties_subscriptionId')]",
+					"resourceGroupName": "[parameters('Adl1LS_properties_typeProperties_resourceGroupName')]"
 				}
 			},
 			"dependsOn": []
@@ -99,13 +144,32 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Assign2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Assign2Sink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": []
+				"linkedServiceName": {
+					"referenceName": "Adl1LS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": "sales.txt",
+						"folderPath": "data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Adl1LS')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Assign3DFSrc')]",
@@ -667,29 +731,6 @@
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/JsonBlack')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BlobLS",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "assign3"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BlobLS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/JsonBlue')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {

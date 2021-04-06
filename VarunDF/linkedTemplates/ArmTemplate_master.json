@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS2LS'"
 		},
+		"Adl1LS_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'Adl1LS'"
+		},
 		"AdventureWorksSQLServerLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AdventureWorksSQLServerLS'"
@@ -30,6 +34,26 @@
 		"ADLS2LS_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://vpadls2.dfs.core.windows.net"
+		},
+		"Adl1LS_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "https://vpadls1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"Adl1LS_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "d19e4637-e496-470d-b970-ec0db1506cf4"
+		},
+		"Adl1LS_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "142a8c0d-f4f8-4075-9e95-8c7b13fedb8f"
+		},
+		"Adl1LS_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "dd03e502-4ab2-4eb7-85fd-3ecf67cc8345"
+		},
+		"Adl1LS_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "VarunPatilRG"
 		},
 		"containerUri": {
 			"type": "string",
@@ -61,6 +85,9 @@
 					"ADLS2LS_accountKey": {
 						"value": "[parameters('ADLS2LS_accountKey')]"
 					},
+					"Adl1LS_servicePrincipalKey": {
+						"value": "[parameters('Adl1LS_servicePrincipalKey')]"
+					},
 					"BlobLS_connectionString": {
 						"value": "[parameters('BlobLS_connectionString')]"
 					},
@@ -72,6 +99,21 @@
 					},
 					"ADLS2LS_properties_typeProperties_url": {
 						"value": "[parameters('ADLS2LS_properties_typeProperties_url')]"
+					},
+					"Adl1LS_properties_typeProperties_dataLakeStoreUri": {
+						"value": "[parameters('Adl1LS_properties_typeProperties_dataLakeStoreUri')]"
+					},
+					"Adl1LS_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('Adl1LS_properties_typeProperties_servicePrincipalId')]"
+					},
+					"Adl1LS_properties_typeProperties_tenant": {
+						"value": "[parameters('Adl1LS_properties_typeProperties_tenant')]"
+					},
+					"Adl1LS_properties_typeProperties_subscriptionId": {
+						"value": "[parameters('Adl1LS_properties_typeProperties_subscriptionId')]"
+					},
+					"Adl1LS_properties_typeProperties_resourceGroupName": {
+						"value": "[parameters('Adl1LS_properties_typeProperties_resourceGroupName')]"
 					}
 				}
 			},

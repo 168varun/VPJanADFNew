@@ -8,6 +8,9 @@
 		"ADLS2LS_accountKey": {
 			"value": ""
 		},
+		"Adl1LS_servicePrincipalKey": {
+			"value": ""
+		},
 		"AdventureWorksSQLServerLS_connectionString": {
 			"value": ""
 		},
@@ -22,6 +25,21 @@
 		},
 		"ADLS2LS_properties_typeProperties_url": {
 			"value": "https://vpadls2.dfs.core.windows.net"
+		},
+		"Adl1LS_properties_typeProperties_dataLakeStoreUri": {
+			"value": "https://vpadls1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"Adl1LS_properties_typeProperties_servicePrincipalId": {
+			"value": "d19e4637-e496-470d-b970-ec0db1506cf4"
+		},
+		"Adl1LS_properties_typeProperties_tenant": {
+			"value": "142a8c0d-f4f8-4075-9e95-8c7b13fedb8f"
+		},
+		"Adl1LS_properties_typeProperties_subscriptionId": {
+			"value": "dd03e502-4ab2-4eb7-85fd-3ecf67cc8345"
+		},
+		"Adl1LS_properties_typeProperties_resourceGroupName": {
+			"value": "VarunPatilRG"
 		}
 	}
 }
