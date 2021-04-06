@@ -1,0 +1,41 @@
+{
+	"name": "Assign7CopySink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobLS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"year": {
+				"type": "string"
+			},
+			"month": {
+				"type": "string"
+			},
+			"day": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(dataset().day, '.txt')",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat(dataset().year, '/', dataset().month)",
+					"type": "Expression"
+				},
+				"container": "assign7"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
