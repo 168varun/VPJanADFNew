@@ -1,0 +1,23 @@
+{
+	"name": "Assign2Sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Adl1LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": "sales.txt",
+				"folderPath": "data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
