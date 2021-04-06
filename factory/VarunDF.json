@@ -9,6 +9,10 @@
 			"OPUser": {
 				"type": "string",
 				"value": "sa"
+			},
+			"OPPass": {
+				"type": "string",
+				"value": "lti"
 			}
 		}
 	},
