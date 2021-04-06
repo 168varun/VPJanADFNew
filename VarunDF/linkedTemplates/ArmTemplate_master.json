@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BlobLS'"
 		},
+		"DemoDBLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'DemoDBLS'"
+		},
 		"FileServerLS_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'FileServerLS'"
@@ -71,6 +75,9 @@
 					},
 					"BlobLS_connectionString": {
 						"value": "[parameters('BlobLS_connectionString')]"
+					},
+					"DemoDBLS_connectionString": {
+						"value": "[parameters('DemoDBLS_connectionString')]"
 					},
 					"SampleDBLS_connectionString": {
 						"value": "[parameters('SampleDBLS_connectionString')]"

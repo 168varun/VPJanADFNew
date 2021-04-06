@@ -11,6 +11,9 @@
 		"BlobLS_connectionString": {
 			"value": ""
 		},
+		"DemoDBLS_connectionString": {
+			"value": ""
+		},
 		"FileServerLS_password": {
 			"value": ""
 		},
