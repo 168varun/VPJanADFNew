@@ -1,0 +1,51 @@
+{
+	"name": "SCD Dataflow Product",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SCDProductSrc",
+						"type": "DatasetReference"
+					},
+					"name": "SalesLTProduct"
+				},
+				{
+					"dataset": {
+						"referenceName": "SCDDemoDimProductSrc",
+						"type": "DatasetReference"
+					},
+					"name": "DemoProduct"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SCDDemoDimProductSrc",
+						"type": "DatasetReference"
+					},
+					"name": "DimProductSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn"
+				},
+				{
+					"name": "ExistsHashKey"
+				},
+				{
+					"name": "LookupProductID"
+				},
+				{
+					"name": "DerivedColumnFromLookup"
+				},
+				{
+					"name": "AlterRow"
+				}
+			],
+			"script": "source(output(\n\t\tProductID as integer,\n\t\tName as string,\n\t\tProductNumber as string,\n\t\tColor as string,\n\t\tStandardCost as decimal(19,4),\n\t\tListPrice as decimal(19,4),\n\t\tSize as string,\n\t\tWeight as decimal(8,2),\n\t\tProductCategoryID as integer,\n\t\tProductModelID as integer,\n\t\tSellStartDate as timestamp,\n\t\tSellEndDate as timestamp,\n\t\tDiscontinuedDate as timestamp,\n\t\tThumbNailPhoto as binary,\n\t\tThumbnailPhotoFileName as string,\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SalesLTProduct\nsource(output(\n\t\tProductID as integer,\n\t\tName as string,\n\t\tProductNumber as string,\n\t\tColor as string,\n\t\tInsertedDate as timestamp,\n\t\tUpdatedDate as timestamp,\n\t\tHashKey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> DemoProduct\nSalesLTProduct derive(CreatedHash = sha1(Name + ProductNumber + Color)) ~> DerivedColumn\nDerivedColumn, DemoProduct exists(CreatedHash == HashKey,\n\tnegate:true,\n\tbroadcast: 'auto')~> ExistsHashKey\nExistsHashKey, DemoProduct lookup(SalesLTProduct@ProductID == DemoProduct@ProductID,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupProductID\nLookupProductID derive(InsertedDate = iif(isNull(InsertedDate), currentTimestamp(), InsertedDate),\n\t\tUpdatedDate = currentTimestamp()) ~> DerivedColumnFromLookup\nDerivedColumnFromLookup alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tProductID as integer,\n\t\tName as string,\n\t\tProductNumber as string,\n\t\tColor as string,\n\t\tInsertedDate as timestamp,\n\t\tUpdatedDate as timestamp,\n\t\tHashKey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['ProductID'],\n\tformat: 'table',\n\tmapColumn(\n\t\tProductID = SalesLTProduct@ProductID,\n\t\tName = SalesLTProduct@Name,\n\t\tProductNumber = SalesLTProduct@ProductNumber,\n\t\tColor = SalesLTProduct@Color,\n\t\tInsertedDate,\n\t\tUpdatedDate,\n\t\tHashKey = CreatedHash\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> DimProductSink"
+		}
+	}
+}
