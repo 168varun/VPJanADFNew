@@ -14,23 +14,8 @@
 		"DemoDBLS_connectionString": {
 			"value": ""
 		},
-		"FileServerLS_password": {
-			"value": ""
-		},
 		"SampleDBLS_connectionString": {
 			"value": ""
-		},
-		"SqlServerAdWLS_connectionString": {
-			"value": ""
-		},
-		"SqlServerLS_connectionString": {
-			"value": ""
-		},
-		"FileServerLS_properties_typeProperties_host": {
-			"value": "C:\\Users\\Varun\\Desktop\\LTI_NEW\\_Training\\SynapseLS"
-		},
-		"FileServerLS_properties_typeProperties_userId": {
-			"value": "Varun"
 		},
 		"containerUri": {
 			"value": ""
