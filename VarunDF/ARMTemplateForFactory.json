@@ -7,9 +7,9 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "VarunDF"
 		},
-		"AzureSynapseAnalyticsLS_connectionString": {
+		"AdventureWorksSQLServerLS_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsLS'"
+			"metadata": "Secure string for 'connectionString' of 'AdventureWorksSQLServerLS'"
 		},
 		"BlobLS_connectionString": {
 			"type": "secureString",
@@ -28,6 +28,67 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Assign1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"tableOption": "autoCreate"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "OnPAdvWorksCopySrc",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Assignment1CopySink",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/OnPAdvWorksCopySrc')]",
+				"[concat(variables('factoryId'), '/datasets/Assignment1CopySink')]"
+			]
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SCD Pipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -117,6 +178,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Assignment1CopySink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DemoDBLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "Sales",
+					"table": "Store"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/DemoDBLS')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CopySink')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -170,35 +252,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/SampleDBLS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ExcelSynapseCopySink')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalyticsLS",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tableName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "ExcelSynapse",
-					"table": {
-						"value": "@dataset().tableName",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalyticsLS')]"
 			]
 		},
 		{
@@ -282,6 +335,33 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/SampleDBLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OnPAdvWorksCopySrc')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AdventureWorksSQLServerLS",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"serverName": "DESKTOP-7V953MT\\LTI_SERVER",
+						"dbName": "AdventureWorks2012",
+						"sqlUser": "sa",
+						"sqlPass": "lti"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "Sales",
+					"table": "Store"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AdventureWorksSQLServerLS')]"
 			]
 		},
 		{
@@ -636,17 +716,37 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsLS')]",
+			"name": "[concat(parameters('factoryName'), '/AdventureWorksSQLServerLS')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"parameters": {
+					"serverName": {
+						"type": "String"
+					},
+					"dbName": {
+						"type": "String"
+					},
+					"sqlUser": {
+						"type": "String"
+					},
+					"sqlPass": {
+						"type": "String"
+					}
+				},
 				"annotations": [],
-				"type": "AzureSqlDW",
+				"type": "SqlServer",
 				"typeProperties": {
-					"connectionString": "[parameters('AzureSynapseAnalyticsLS_connectionString')]"
+					"connectionString": "[parameters('AdventureWorksSQLServerLS_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "OnPremiseIR",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/OnPremiseIR')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/BlobLS')]",
@@ -684,6 +784,16 @@
 				"typeProperties": {
 					"connectionString": "[parameters('SampleDBLS_connectionString')]"
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OnPremiseIR')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
 			},
 			"dependsOn": []
 		},

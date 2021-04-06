@@ -5,7 +5,7 @@
 		"factoryName": {
 			"value": "VarunDF"
 		},
-		"AzureSynapseAnalyticsLS_connectionString": {
+		"AdventureWorksSQLServerLS_connectionString": {
 			"value": ""
 		},
 		"BlobLS_connectionString": {

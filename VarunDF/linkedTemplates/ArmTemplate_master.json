@@ -7,9 +7,9 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "VarunDF"
 		},
-		"AzureSynapseAnalyticsLS_connectionString": {
+		"AdventureWorksSQLServerLS_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsLS'"
+			"metadata": "Secure string for 'connectionString' of 'AdventureWorksSQLServerLS'"
 		},
 		"BlobLS_connectionString": {
 			"type": "secureString",
@@ -50,9 +50,6 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AzureSynapseAnalyticsLS_connectionString": {
-						"value": "[parameters('AzureSynapseAnalyticsLS_connectionString')]"
-					},
 					"BlobLS_connectionString": {
 						"value": "[parameters('BlobLS_connectionString')]"
 					},
@@ -61,10 +58,33 @@
 					},
 					"SampleDBLS_connectionString": {
 						"value": "[parameters('SampleDBLS_connectionString')]"
+					},
+					"AdventureWorksSQLServerLS_connectionString": {
+						"value": "[parameters('AdventureWorksSQLServerLS_connectionString')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "VarunDF_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VarunDF_ArmTemplate_0')]"
+			]
 		}
 	]
 }
