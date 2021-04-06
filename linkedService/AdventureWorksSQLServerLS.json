@@ -1,0 +1,29 @@
+{
+	"name": "AdventureWorksSQLServerLS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"serverName": {
+				"type": "String"
+			},
+			"dbName": {
+				"type": "String"
+			},
+			"sqlUser": {
+				"type": "String"
+			},
+			"sqlPass": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Data Source=@{linkedService().serverName};Initial Catalog=@{linkedService().dbName};User ID=@{linkedService().sqlUser};Password=@{linkedService().sqlPass}"
+		},
+		"connectVia": {
+			"referenceName": "OnPremiseIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
