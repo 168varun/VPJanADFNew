@@ -6,12 +6,437 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "VarunDF"
+		},
+		"AdventureWorksSQLServerLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AdventureWorksSQLServerLS'"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SCDProductSrc')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SampleDBLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProductNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Color",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StandardCost",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "ListPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "Size",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Weight",
+						"type": "decimal",
+						"precision": 8,
+						"scale": 2
+					},
+					{
+						"name": "ProductCategoryID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ProductModelID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SellStartDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "SellEndDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DiscontinuedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ThumbNailPhoto",
+						"type": "varbinary"
+					},
+					{
+						"name": "ThumbnailPhotoFileName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "Product"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SCDSampleDBSrc')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SampleDBLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CustomerID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NameStyle",
+						"type": "bit"
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MiddleName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Suffix",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CompanyName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SalesPerson",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EmailAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Phone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PasswordHash",
+						"type": "varchar"
+					},
+					{
+						"name": "PasswordSalt",
+						"type": "varchar"
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "Customer"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorksSQLServerLS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"serverName": {
+						"type": "String"
+					},
+					"dbName": {
+						"type": "String"
+					},
+					"sqlUser": {
+						"type": "String"
+					},
+					"sqlPass": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('AdventureWorksSQLServerLS_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "OnPremiseIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OnPAdvWorksCopySrc')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AdventureWorksSQLServerLS",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"serverName": "DESKTOP-7V953MT\\LTI_SERVER",
+						"dbName": "AdventureWorks2012",
+						"sqlUser": "sa",
+						"sqlPass": "lti"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "Sales",
+					"table": "Store"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AdventureWorksSQLServerLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Assign3DF')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Assign3DFSrc",
+								"type": "DatasetReference"
+							},
+							"name": "ProductSrc"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "JsonBlack",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "JsonBlue",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						},
+						{
+							"dataset": {
+								"referenceName": "JsonGrey",
+								"type": "DatasetReference"
+							},
+							"name": "sink3"
+						},
+						{
+							"dataset": {
+								"referenceName": "JsonMulti",
+								"type": "DatasetReference"
+							},
+							"name": "sink4"
+						},
+						{
+							"dataset": {
+								"referenceName": "JsonDef",
+								"type": "DatasetReference"
+							},
+							"name": "sink5"
+						}
+					],
+					"transformations": [
+						{
+							"name": "ConditionalSplit1"
+						}
+					],
+					"script": "source(output(\n\t\tProductID as integer,\n\t\tName as string,\n\t\tProductNumber as string,\n\t\tColor as string,\n\t\tStandardCost as decimal(19,4),\n\t\tListPrice as decimal(19,4),\n\t\tSize as string,\n\t\tWeight as decimal(8,2),\n\t\tProductCategoryID as integer,\n\t\tProductModelID as integer,\n\t\tSellStartDate as timestamp,\n\t\tSellEndDate as timestamp,\n\t\tDiscontinuedDate as timestamp,\n\t\tThumbNailPhoto as binary,\n\t\tThumbnailPhotoFileName as string,\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProductSrc\nProductSrc split(Color == 'Black',\n\tColor == 'Blue',\n\tColor == 'Grey',\n\tColor == 'Multi',\n\tdisjoint: false) ~> ConditionalSplit1@(Black, Blue, Grey, Multi, Default)\nConditionalSplit1@Black sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Black'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nConditionalSplit1@Blue sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Blue'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2\nConditionalSplit1@Grey sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Grey'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink3\nConditionalSplit1@Multi sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Multi'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink4\nConditionalSplit1@Default sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Default'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink5"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SCD Dataflow Product')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SCDProductSrc",
+								"type": "DatasetReference"
+							},
+							"name": "SalesLTProduct"
+						},
+						{
+							"dataset": {
+								"referenceName": "SCDDemoDimProductSrc",
+								"type": "DatasetReference"
+							},
+							"name": "DemoProduct"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SCDDemoDimProductSrc",
+								"type": "DatasetReference"
+							},
+							"name": "DimProductSink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn"
+						},
+						{
+							"name": "ExistsHashKey"
+						},
+						{
+							"name": "LookupProductID"
+						},
+						{
+							"name": "DerivedColumnFromLookup"
+						},
+						{
+							"name": "AlterRow"
+						}
+					],
+					"script": "source(output(\n\t\tProductID as integer,\n\t\tName as string,\n\t\tProductNumber as string,\n\t\tColor as string,\n\t\tStandardCost as decimal(19,4),\n\t\tListPrice as decimal(19,4),\n\t\tSize as string,\n\t\tWeight as decimal(8,2),\n\t\tProductCategoryID as integer,\n\t\tProductModelID as integer,\n\t\tSellStartDate as timestamp,\n\t\tSellEndDate as timestamp,\n\t\tDiscontinuedDate as timestamp,\n\t\tThumbNailPhoto as binary,\n\t\tThumbnailPhotoFileName as string,\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SalesLTProduct\nsource(output(\n\t\tProductID as integer,\n\t\tName as string,\n\t\tProductNumber as string,\n\t\tColor as string,\n\t\tInsertedDate as timestamp,\n\t\tUpdatedDate as timestamp,\n\t\tHashKey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> DemoProduct\nSalesLTProduct derive(CreatedHash = sha1(Name + ProductNumber + Color)) ~> DerivedColumn\nDerivedColumn, DemoProduct exists(CreatedHash == HashKey,\n\tnegate:true,\n\tbroadcast: 'auto')~> ExistsHashKey\nExistsHashKey, DemoProduct lookup(SalesLTProduct@ProductID == DemoProduct@ProductID,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupProductID\nLookupProductID derive(InsertedDate = iif(isNull(InsertedDate), currentTimestamp(), InsertedDate),\n\t\tUpdatedDate = currentTimestamp()) ~> DerivedColumnFromLookup\nDerivedColumnFromLookup alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tProductID as integer,\n\t\tName as string,\n\t\tProductNumber as string,\n\t\tColor as string,\n\t\tInsertedDate as timestamp,\n\t\tUpdatedDate as timestamp,\n\t\tHashKey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['ProductID'],\n\tformat: 'table',\n\tmapColumn(\n\t\tProductID = SalesLTProduct@ProductID,\n\t\tName = SalesLTProduct@Name,\n\t\tProductNumber = SalesLTProduct@ProductNumber,\n\t\tColor = SalesLTProduct@Color,\n\t\tInsertedDate,\n\t\tUpdatedDate,\n\t\tHashKey = CreatedHash\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> DimProductSink"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SCDProductSrc')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SCD Dataflow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "SCDSampleDBSrc",
+								"type": "DatasetReference"
+							},
+							"name": "SalesLTCustomer"
+						},
+						{
+							"dataset": {
+								"referenceName": "SCDDemoDBSrc",
+								"type": "DatasetReference"
+							},
+							"name": "DemoDimCustomer"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SCDDemoDBSrc",
+								"type": "DatasetReference"
+							},
+							"name": "DimCustomerSink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumnFromSalesLTCustomer"
+						},
+						{
+							"name": "ExistsHashKey"
+						},
+						{
+							"name": "LookupCustomerID"
+						},
+						{
+							"name": "DerivedColumnFromLookup"
+						},
+						{
+							"name": "AlterRow"
+						}
+					],
+					"script": "source(output(\n\t\tCustomerID as integer,\n\t\tNameStyle as boolean,\n\t\tTitle as string,\n\t\tFirstName as string,\n\t\tMiddleName as string,\n\t\tLastName as string,\n\t\tSuffix as string,\n\t\tCompanyName as string,\n\t\tSalesPerson as string,\n\t\tEmailAddress as string,\n\t\tPhone as string,\n\t\tPasswordHash as string,\n\t\tPasswordSalt as string,\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SalesLTCustomer\nsource(output(\n\t\tCustomerID as integer,\n\t\tTitle as string,\n\t\tFirstName as string,\n\t\tMiddleName as string,\n\t\tLastName as string,\n\t\tInsertedDate as timestamp,\n\t\tUpdatedDate as timestamp,\n\t\tHashKey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> DemoDimCustomer\nSalesLTCustomer derive(CreatedHash = sha1(FirstName + LastName + CompanyName)) ~> DerivedColumnFromSalesLTCustomer\nDerivedColumnFromSalesLTCustomer, DemoDimCustomer exists(CreatedHash == HashKey,\n\tnegate:true,\n\tbroadcast: 'auto')~> ExistsHashKey\nExistsHashKey, DemoDimCustomer lookup(SalesLTCustomer@CustomerID == DemoDimCustomer@CustomerID,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupCustomerID\nLookupCustomerID derive(InsertedDate = iif(isNull(InsertedDate), currentTimestamp(), InsertedDate),\n\t\tUpdatedDate = currentTimestamp()) ~> DerivedColumnFromLookup\nDerivedColumnFromLookup alterRow(upsertIf(true())) ~> AlterRow\nAlterRow sink(input(\n\t\tCustomerID as integer,\n\t\tTitle as string,\n\t\tFirstName as string,\n\t\tMiddleName as string,\n\t\tLastName as string,\n\t\tInsertedDate as timestamp,\n\t\tUpdatedDate as timestamp,\n\t\tHashKey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:false,\n\tupsertable:true,\n\tkeys:['CustomerID'],\n\tformat: 'table',\n\tmapColumn(\n\t\tCustomerID = SalesLTCustomer@CustomerID,\n\t\tTitle = SalesLTCustomer@Title,\n\t\tFirstName = SalesLTCustomer@FirstName,\n\t\tMiddleName = SalesLTCustomer@MiddleName,\n\t\tLastName = SalesLTCustomer@LastName,\n\t\tInsertedDate,\n\t\tUpdatedDate,\n\t\tHashKey = CreatedHash\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> DimCustomerSink"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SCDSampleDBSrc')]"
+			]
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Assign1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -68,7 +493,56 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/OnPAdvWorksCopySrc')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Assign3')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Assign3DF",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ProductSrc": {},
+									"sink1": {},
+									"sink2": {},
+									"sink3": {},
+									"sink4": {},
+									"sink5": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Assign3DF')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SCD Pipeline')]",
@@ -110,7 +584,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/SCD Dataflow')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SCD Product Pipeline')]",
@@ -152,7 +628,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/SCD Dataflow Product')]"
+			]
 		}
 	]
 }

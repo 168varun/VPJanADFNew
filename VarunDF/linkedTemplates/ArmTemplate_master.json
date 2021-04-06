@@ -58,9 +58,6 @@
 					},
 					"SampleDBLS_connectionString": {
 						"value": "[parameters('SampleDBLS_connectionString')]"
-					},
-					"AdventureWorksSQLServerLS_connectionString": {
-						"value": "[parameters('AdventureWorksSQLServerLS_connectionString')]"
 					}
 				}
 			},
@@ -79,6 +76,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AdventureWorksSQLServerLS_connectionString": {
+						"value": "[parameters('AdventureWorksSQLServerLS_connectionString')]"
 					}
 				}
 			},
