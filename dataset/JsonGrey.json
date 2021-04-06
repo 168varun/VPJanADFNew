@@ -1,0 +1,18 @@
+{
+	"name": "JsonGrey",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "assign3"
+			}
+		},
+		"schema": {}
+	}
+}
