@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "VarunDF"
 		},
+		"ADLS2LS_accountKey": {
+			"value": ""
+		},
 		"AdventureWorksSQLServerLS_connectionString": {
 			"value": ""
 		},
@@ -16,6 +19,9 @@
 		},
 		"SampleDBLS_connectionString": {
 			"value": ""
+		},
+		"ADLS2LS_properties_typeProperties_url": {
+			"value": "https://vpadls2.dfs.core.windows.net"
 		}
 	}
 }
