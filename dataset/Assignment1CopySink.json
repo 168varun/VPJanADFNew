@@ -1,0 +1,16 @@
+{
+	"name": "Assignment1CopySink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DemoDBLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "Sales",
+			"table": "Store"
+		}
+	}
+}
