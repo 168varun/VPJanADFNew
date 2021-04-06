@@ -1,0 +1,12 @@
+{
+	"name": "Assign6CopySrc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SampleDBLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"name": "Assign6CopySink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Data",
+				"container": "assign6"
+			}
+		},
+		"schema": {}
+	}
+}
