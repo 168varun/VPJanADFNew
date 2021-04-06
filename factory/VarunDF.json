@@ -13,6 +13,10 @@
 			"OPPass": {
 				"type": "string",
 				"value": "lti"
+			},
+			"OPAdv": {
+				"type": "string",
+				"value": "AdventureWorks2012"
 			}
 		}
 	},
