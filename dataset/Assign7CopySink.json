@@ -26,10 +26,10 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@concat('samplelt/', dataset().year, '/', dataset().month)",
+					"value": "@concat(dataset().year, '/', dataset().month)",
 					"type": "Expression"
 				},
-				"container": "assign7"
+				"container": "assign7p"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
