@@ -1,29 +1,9 @@
 {
 	"name": "VarunDF",
-	"properties": {
-		"globalParameters": {
-			"OPServer": {
-				"type": "string",
-				"value": "DESKTOP-7V953MT\\LTI_SERVER"
-			},
-			"OPUser": {
-				"type": "string",
-				"value": "sa"
-			},
-			"OPPass": {
-				"type": "string",
-				"value": "lti"
-			},
-			"OPAdv": {
-				"type": "string",
-				"value": "AdventureWorks2012"
-			}
-		}
-	},
 	"location": "eastus2",
 	"identity": {
 		"type": "SystemAssigned",
-		"principalId": "f4e3f859-5b65-4808-9030-2fa5d5ad601c",
+		"principalId": "9f6f371c-0adb-4c48-bfd7-752afdb7fa54",
 		"tenantId": "142a8c0d-f4f8-4075-9e95-8c7b13fedb8f"
 	}
 }
