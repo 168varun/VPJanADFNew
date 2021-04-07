@@ -2,7 +2,7 @@
 	"name": "Assignment1CopySink",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "DemoDBLS",
+			"referenceName": "SampleDBLS",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
