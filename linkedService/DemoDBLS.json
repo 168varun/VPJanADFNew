@@ -5,8 +5,8 @@
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=vplti.database.windows.net;initial catalog=demodb;user id=sqladmin",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlZBUlVOREZfYjNiYTMwZDEtZDc1Ni00NmEzLWIwOGUtMjYxZDA3NjBmOTJjIg0KfQ=="
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=vpltiserver.database.windows.net;initial catalog=demodb;user id=sqladmin",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlZBUlVOREZfOWQ3MDAyYTEtYTAxMC00MGVjLWI1OWMtMDVjNjlkOTA5ODZmIg0KfQ=="
 		}
 	}
 }
