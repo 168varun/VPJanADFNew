@@ -1,18 +1,1 @@
-{
-	"OPServer": {
-		"type": "string",
-		"value": "DESKTOP-7V953MT\\LTI_SERVER"
-	},
-	"OPUser": {
-		"type": "string",
-		"value": "sa"
-	},
-	"OPPass": {
-		"type": "string",
-		"value": "lti"
-	},
-	"OPAdv": {
-		"type": "string",
-		"value": "AdventureWorks2012"
-	}
-}
+{}
