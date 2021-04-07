@@ -5,10 +5,36 @@
 			"referenceName": "AdventureWorksSQLServerLS",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"serverName": "DESKTOP-7V953MT\\LTI_SERVER",
-				"dbName": "AdventureWorks2012",
-				"sqlUser": "sa",
-				"sqlPass": "lti"
+				"serverName": {
+					"value": "@dataset().serv",
+					"type": "Expression"
+				},
+				"dbName": {
+					"value": "@dataset().dbase",
+					"type": "Expression"
+				},
+				"sqlUser": {
+					"value": "@dataset().user",
+					"type": "Expression"
+				},
+				"sqlPass": {
+					"value": "@dataset().pass",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"dbase": {
+				"type": "string"
+			},
+			"serv": {
+				"type": "string"
+			},
+			"user": {
+				"type": "string"
+			},
+			"pass": {
+				"type": "string"
 			}
 		},
 		"annotations": [],

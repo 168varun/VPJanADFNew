@@ -37,7 +37,25 @@
 				"inputs": [
 					{
 						"referenceName": "OnPAdvWorksCopySrc",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"dbase": {
+								"value": "@pipeline().parameters.db",
+								"type": "Expression"
+							},
+							"serv": {
+								"value": "@pipeline().parameters.server",
+								"type": "Expression"
+							},
+							"user": {
+								"value": "@pipeline().parameters.user",
+								"type": "Expression"
+							},
+							"pass": {
+								"value": "@pipeline().parameters.pass",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -48,6 +66,20 @@
 				]
 			}
 		],
+		"parameters": {
+			"db": {
+				"type": "string"
+			},
+			"server": {
+				"type": "string"
+			},
+			"user": {
+				"type": "string"
+			},
+			"pass": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
